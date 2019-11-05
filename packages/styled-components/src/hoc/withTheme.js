@@ -13,6 +13,7 @@ import hoistStatics from '../utils/hoist';
 // but the old build system tooling doesn't support the syntax
 
 export default (Component: AbstractComponent<*, *>) => {
+  /* #__PURE__ */
   // $FlowFixMe This should be React.forwardRef<Config, Instance>
   const WithTheme = React.forwardRef((props, ref) => {
     const theme = useContext(ThemeContext);

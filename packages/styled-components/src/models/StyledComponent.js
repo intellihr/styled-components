@@ -235,6 +235,7 @@ export default function createStyledComponent(
 
   forwardRef.displayName = displayName;
 
+  /* #__PURE__ */
   // $FlowFixMe this is a forced cast to merge it StyledComponentWrapperProperties
   WrappedStyledComponent = (React.forwardRef(forwardRef): StyledComponentWrapper<*, *>);
 
