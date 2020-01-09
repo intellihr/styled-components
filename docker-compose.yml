@@ -16,4 +16,4 @@ services:
 
   publish:
     image: intellihr/styled-components:latest
-    command: yarn publish
+    command: ./publish

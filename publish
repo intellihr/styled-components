@@ -1,13 +1,15 @@
 #!/usr/bin/env sh
 
+echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./packages/styled-components/.npmrc
+
 git config user.email "continuous.integration@intellihr.com.au"
 git config user.name "IntelliHR CI"
 
-echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-
-yarn publish
-
 git remote add github "git@github.com:intellihr/styled-components.git" || true
-git push --tags github
+git checkout master
 
+yarn run publish
+
+git push --tags github
 git push github HEAD:master
