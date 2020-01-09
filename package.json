@@ -13,7 +13,7 @@
     "test": "run-s test:*",
     "prepare": "yarn bs && yarn build",
     "prepublishOnly": "yarn clean && yarn && yarn build && yarn test && cp README.md packages/styled-components",
-    "publish": "lerna version prerelease && lerna publish",
+    "publish": "lerna publish --yes prerelease",
     "test:web": "jest -c scripts/jest/config.main.js",
     "test:web:watch": "yarn test:web -- --watch",
     "test:native": "jest -c scripts/jest/config.native.js",
@@ -25,7 +25,7 @@
   "author": "Glen Maddern",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/styled-components/styled-components/issues"
+    "url": "https://github.com/intellihr/styled-components/issues"
   },
   "homepage": "https://styled-components.com",
   "devDependencies": {

@@ -7,16 +7,17 @@ pipeline {
 
   environment {
     APP_NAME = 'styled-components'
+    AWS_DEFAULT_REGION = 'ap-southeast-2'
   }
 
   stages {
     stage('prepare') {
       steps {
-        sh 'docker network create gateway || true'
+        sh 'docker-compose down'
         script {
           env.COMMIT_HASH = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
 
-          withAWSParameterStore(namePrefixes: 'shared.NPM_TOKEN', regionName: env.AWS_DEFAULT_REGION) {
+          withAWSParameterStore(namePrefixes: '/shared/NPM_TOKEN', regionName: env.AWS_DEFAULT_REGION) {
             env.NPM_TOKEN = env.SHARED_NPM_TOKEN
           }
         }
@@ -61,12 +62,6 @@ pipeline {
         milestone 1
         lock('publish') {
           sshagent (credentials: ['GITHUB_CI_SSH_KEY']) {
-            script {
-              withAWSParameterStore(namePrefixes: 'shared.NPM_TOKEN', regionName: env.AWS_DEFAULT_REGION) {
-                env.NPM_TOKEN = env.SHARED_NPM_TOKEN
-              }
-            }
-
             sh '''
               docker-compose run --rm \
                 --volume "$SSH_AUTH_SOCK":/tmp/agent.sock \
